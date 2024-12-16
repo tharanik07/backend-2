@@ -5,8 +5,9 @@ const db = require('./db');
 const app = express();
 app.use(express.json()); 
 app.use(cors({
-    origin: 'http://localhost:3000', 
+    origin: 'https://frontend-kq827splt-tharani-kumars-projects.vercel.app', 
 }));
+
 
 app.post("/add-user", async (req, res) => {
     try {
