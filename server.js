@@ -13,15 +13,15 @@ app.post("/add-user", async (req, res) => {
     try {
         console.log("Received data:", req.body);
 
-        const { firstname, lastname, employeeid, email, phoneno, department, doj, role } = req.body;
+        const { first_name, last_name, employee_id, email, phone_no, department, doj, role } = req.body;
 
-        if (!firstname || !lastname || !employeeid || !email || !phoneno || !department || !doj || !role) {
+        if (!first_name || !last_name || !employee_id || !email || !phone_no || !department || !doj || !role) {
             return res.status(400).json({ error: "All fields are required" });
         }
 
         const checkQuery = `SELECT * FROM users WHERE email = ? OR employee_id = ?`;
 
-        const [results] = await db.promise().query(checkQuery, [email, employeeid]);
+        const [results] = await db.promise().query(checkQuery, [email, employee_id]);
 
         if (results.length > 0) {
             const duplicateField = results.find(result => result.email === email) ? "email" : "employee ID";
@@ -31,7 +31,7 @@ app.post("/add-user", async (req, res) => {
         const sql = `INSERT INTO users (first_name, last_name, employee_id, email, phone_no, department, doj, role) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
 
-        const values = [firstname, lastname, employeeid, email, phoneno, department, doj, role];
+        const values = [first_name, last_name, employee_id, email, phone_no, department, doj, role];
 
         await db.promise().query(sql, values);
 
